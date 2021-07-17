@@ -99,7 +99,9 @@ class Header extends Component{
 
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                 <ModalHeader>Login</ModalHeader>
-                    <Form onSubmit={this.handleLogin} className="p-5">
+
+                <ModalBody>
+                    <Form onSubmit={this.handleLogin}>
                         <FormGroup>
                             <Label htmlFor="username">Username</Label>
                             <Input type="text" id="username" name="username" className="mb-4"
@@ -120,10 +122,6 @@ class Header extends Component{
                             <Button type="submit" value="submit" color="primary">Login</Button>
                         </FormGroup>
                     </Form>
-                <ModalBody>
-
-
-
                 </ModalBody>
             </Modal>
 
