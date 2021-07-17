@@ -4,19 +4,18 @@ import { Link } from 'react-router-dom';
 
 function RenderLeader({leader}){
     return(
-        <Media>
-            <Media left>
-                <img src={leader.image} class="align-self-start mr-3" alt={leader.name} width="64" height="64"/> 
+        <Media className="row">
+            <Media left className="col-md-2 mb-3">
+                <img src={leader.image} class="align-self-start mr-3" alt={leader.name} width="105" height="105"/> 
             </Media>
 
-            <Media body>
+            <Media body className="col-md-10">
                 <Media heading>{leader.name}</Media>
                 <p>{leader.designation}</p>
 
                 <p>{leader.description}</p>
             </Media>
         </Media>
-
     );
 }
 
