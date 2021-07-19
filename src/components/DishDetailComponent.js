@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import DateFormat from '../utils/DateFormat';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -150,11 +151,31 @@ function RenderDish({dish}){
 
 function DishDetail(props) {
 
-    const dish = props.dish;
-    const comments = props.comments;
-    const addComment = props.addComment;
+    if(props.isLoading){
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading/>
+                </div>
+            </div>
+        );
+    }
 
-    if(dish != null){
+    else if(props.errMess){
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+
+    else if(props.dish != null){
+        const dish = props.dish;
+        const comments = props.comments;
+        const addComment = props.addComment;
+
         return (
             <div className="container">
 
