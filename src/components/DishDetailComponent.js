@@ -28,8 +28,8 @@ class CommentForm extends Component{
     }
 
     handleSubmit(values){
-        console.log("Current State is: " + JSON.stringify(values));
-        alert("Current State is: " + JSON.stringify(values));
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render(){
@@ -61,16 +61,16 @@ class CommentForm extends Component{
                         </Row>
 
                         <Row className="form-group mb-3">
-                            <Label htmlFor="name">Your Name</Label>
+                            <Label htmlFor="author">Your Name</Label>
                             <Col>
-                                <Control.text model = ".name" id="name" name="name" placeholder="Your name" className="form-control"
+                                <Control.text model = ".author" id="author" name="author" placeholder="Your name" className="form-control"
                                     validators={{
                                         required, minLength: minLength(3), maxLength: maxLength(15)
                                     }}
                                 />
                                 <Errors 
                                     className="text-danger"
-                                    model = ".name"
+                                    model = ".author"
                                     show="touched"
                                     messages={{
                                         required :"Required",
@@ -106,7 +106,7 @@ class CommentForm extends Component{
     }
 }
 
-function renderComments(comments){
+function RenderComments({comments, addComment, dishId}){
 
     if(comments != null){
         const comment = comments.map((comment) => {
@@ -118,6 +118,7 @@ function renderComments(comments){
                     <p>{comment.comment}</p>
                     <p>-- {comment.author} , {date}</p>
                 </div>
+               
             );
         });
 
@@ -125,15 +126,17 @@ function renderComments(comments){
             <div>
                 <h4>Comments</h4>
                 {comment}
+                <CommentForm dishId={dishId} addComment={addComment}/>
             </div>
         );
+
     }
     else{
         return(<div></div>);
     }
 }
 
-function renderDish(dish){
+function RenderDish({dish}){
     return(
         <Card>
             <CardImg width="100%" object src={dish.image} alt={dish.name}/>
@@ -149,6 +152,7 @@ function DishDetail(props) {
 
     const dish = props.dish;
     const comments = props.comments;
+    const addComment = props.addComment;
 
     if(dish != null){
         return (
@@ -169,11 +173,10 @@ function DishDetail(props) {
 
                 <div className="row">
                     <div className="col-sm col-md-5 m-1">
-                        {renderDish(dish)}
+                        <RenderDish dish={dish} />
                     </div>
                     <div className="col-sm col-md-5 m-1">
-                        {renderComments(comments)}
-                        <CommentForm/>
+                        <RenderComments comments={comments} addComment={addComment} dishId={dish.id}/>
                     </div>
                 </div> 
             </div>
